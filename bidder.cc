@@ -11,21 +11,22 @@
 // 3. Do not change the function signatures.
 // ============================================================================
 
-// TODO: Implement this function to return a vector of strings
+// DONE Implement this function to return a vector of strings
 // containing the names of everyone on your team.
 std::vector<std::string> GetTeamMembers() {
-  // Your code here
-  return {};
+  std::vector<std::string> names{"Nelson Vargas", "Phoenix Castillo"};
+  return names;
 }
 
-// TODO: Implement this function to return a string that describes
+// DONE Implement this function to return a string that describes
 // the strategy your logic uses to bid (e.g., "We bid high early on").
 std::string GetStrategy() {
-  // Your code here
-  return "";
+  return "We divide the number of rounds by three, we divide the budget evenly "
+         "between that middle of the three round divisions, leftover gets "
+         "dumped at the beginning of the last division\n";
 }
 
-// TODO: Implement the bidding logic.
+// DONE Implement the bidding logic.
 // parameters:
 //   rounds: The total number of rounds in the game.
 //   budget: The total points available to spend across all rounds.
@@ -41,7 +42,35 @@ std::string GetStrategy() {
 //   - The sum of all bids must not exceed 'budget'.
 //   - Bids must be non-negative integers.
 void GenerateBids(int rounds, int budget, std::string output_filename) {
-  // Your code here
+  std::ofstream file{output_filename};
+  int rnd_div{rounds / 3};
+  int index{1};
+
+  int bids{0};
+  if (rounds % 3 == 1) {
+    bids = budget / (rnd_div + 1);
+  } else if (rounds % 3 == 2) {
+    bids = budget / (rnd_div + 2);
+  }
+  for (; index <= rnd_div; index++) {
+    file << 0 << "\n";
+  }
+  for (; index <= rnd_div * 2; index++) {
+    file << bids << "\n";
+    budget -= bids;
+    if (rounds % 3 == 1 && index == rnd_div * 2) {
+      file << budget << "\n";
+      budget = 0;
+    } else if (rounds % 3 == 2 && index == rnd_div * 2) {
+      bids = budget / 2;
+      file << bids << "\n";
+      file << bids << "\n";
+      budget = 0;
+    }
+  }
+  for (; index <= rnd_div * 3; index++) {
+    file << 0 << "\n";
+  }
 }
 
 // ============================================================================
@@ -52,7 +81,7 @@ void GenerateBids(int rounds, int budget, std::string output_filename) {
 int main() {
   // You can write code here to call your functions and see if they work.
   // Example:
-  // GenerateBids(10, 100, "test_output.txt");
-  
+  // GenerateBids(10, 100, "test_output.txt);
+  GenerateBids(8, 100, "test_output.txt");
   return 0;
 }
