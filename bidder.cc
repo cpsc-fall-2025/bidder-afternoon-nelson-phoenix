@@ -45,13 +45,7 @@ void GenerateBids(int rounds, int budget, std::string output_filename) {
   std::ofstream file{output_filename};
   int rnd_div{rounds / 3};
   int index{1};
-
-  int bids{0};
-  if (rounds % 3 == 1) {
-    bids = budget / (rnd_div + 1);
-  } else if (rounds % 3 == 2) {
-    bids = budget / (rnd_div + 2);
-  }
+  int bids{budget / rnd_div};
   for (; index <= rnd_div; index++) {
     file << 0 << "\n";
   }
@@ -82,6 +76,6 @@ int main() {
   // You can write code here to call your functions and see if they work.
   // Example:
   // GenerateBids(10, 100, "test_output.txt);
-  GenerateBids(8, 100, "test_output.txt");
+  GenerateBids(100, 100, "test_output.txt");
   return 0;
 }
