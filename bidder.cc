@@ -76,6 +76,6 @@ int main() {
   // You can write code here to call your functions and see if they work.
   // Example:
   // GenerateBids(10, 100, "test_output.txt);
-  GenerateBids(100, 100, "test_output.txt");
+  // GenerateBids(100, 100, "test_output.txt");
   return 0;
 }
